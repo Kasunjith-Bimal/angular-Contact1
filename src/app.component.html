@@ -1,0 +1,84 @@
+<div class="control-section" style="margin-top:100px">
+  <button (click)="AddUser(users.length)">Add User</button>
+  <div class="col-lg-8 content-wrapper" *ngFor="let user of users">
+    <div id="content" style="margin: 0 auto; width:500px">
+      <div style="padding-bottom:20px"></div>
+      <span class="contactname"> User id : {{ user.Id }} </span>
+      <br />
+      <span class="contactname">
+        User optionSelectedEmail : {{ user.optionSelectedEmail }}
+      </span>
+      <br />
+      <span class="contactname">
+        User optionSelectedUserName : {{ user.optionSelectedUserName }}
+      </span>
+      <input
+        class="textBoxSearchRecipients e-input"
+        maxlength="250"
+        minlength="1"
+        type="text"
+        placeholder="Signatory UserName"
+        name="UserName{{ user.Id }}"
+        id="UserName{{ user.Id }}"
+        [(ngModel)]="user.UserName"
+        ngModel
+        #UserName="ngModel"
+        autocomplete="off"
+        required
+        (ngModelChange)="modelChanged($event, user, 'userName')"
+        (keydown.enter)="onEnterKey($event, user, 'userName')"
+      />
+
+      <ul *ngIf="user.UserName != '' && !user.optionSelectedUserName">
+        <li
+          *ngFor="
+            let data of sportsData | filterPipeUserName: user.UserName;
+            let i = index
+          "
+          [class.selected]="i === selectedIndex"
+          (click)="selectData(data, user, 'userName')"
+        >
+          {{ data.Email }} || {{ data.UserName }}
+        </li>
+      </ul>
+
+      <input
+        class="textBoxSearchRecipients e-input"
+        maxlength="250"
+        minlength="1"
+        type="text"
+        placeholder="Signatory user email"
+        name="UserEmail{{ user.Id }}"
+        id="UserEmail{{ user.Id }}"
+        [(ngModel)]="user.Email"
+        ngModel
+        #UserEmail="ngModel"
+        autocomplete="off"
+        required
+        (ngModelChange)="modelChanged($event, user, 'Email')"
+        (keydown.enter)="onEnterKey($event, user, 'Email')"
+      />
+
+      <ul *ngIf="user.Email != '' && !user.optionSelectedEmail">
+        <li
+          *ngFor="
+            let data of sportsData | filterPipeEmail: user.Email;
+            let i = index
+          "
+          [class.selected]="i === selectedIndex"
+          (click)="selectData(data, user, 'Email')"
+        >
+          {{ data.Email }} || {{ data.UserName }}|| {{ selectedIndex }}
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+<u>
+  .................................................................................</u
+>
+<div *ngFor="let user of users">
+  <div style="padding-bottom:20px"></div>
+  <div>User name : {{ user.UserName }}</div>
+  <div>Email : {{ user.Email }}</div>
+</div>
