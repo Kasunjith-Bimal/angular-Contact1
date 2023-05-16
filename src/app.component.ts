@@ -210,7 +210,7 @@ export class AppComponent {
   //   }
   // }
 
-  onEnterKey(event: any, user: any, type: string) {}
+  // onEnterKey(event: any, user: any, type: string) {}
 
   handleKeyUp(event: any, user: any, type: string) {
     const currentIndex = this.sportsData.indexOf(this.selectedItem);
@@ -251,7 +251,7 @@ export class AppComponent {
   }
 
   isItemSelected(item: any) {
-    console.log(item);
+    console.log('isItemSelected' + item);
     return item === this.selectedItem;
   }
 }

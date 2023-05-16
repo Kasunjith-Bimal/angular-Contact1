@@ -26,7 +26,6 @@
         autocomplete="off"
         required
         (ngModelChange)="modelChanged($event, user, 'userName')"
-        (keydown.enter)="onEnterKey($event, user, 'userName')"
         (keyup)="handleKeyUp($event, user, 'userName')"
       />
 
@@ -57,7 +56,6 @@
         autocomplete="off"
         required
         (ngModelChange)="modelChanged($event, user, 'Email')"
-        (keydown.enter)="onEnterKey($event, user, 'Email')"
         (keyup)="handleKeyUp($event, user, 'Email')"
       />
 
