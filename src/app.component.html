@@ -27,6 +27,7 @@
         required
         (ngModelChange)="modelChanged($event, user, 'userName')"
         (keydown.enter)="onEnterKey($event, user, 'userName')"
+        (keyup)="handleKeyUp($event, user, 'userName')"
       />
 
       <ul *ngIf="user.UserName != '' && !user.optionSelectedUserName">
@@ -35,7 +36,7 @@
             let data of sportsData | filterPipeUserName: user.UserName;
             let i = index
           "
-          [class.selected]="i === selectedIndex"
+          [class.selected]="isItemSelected(data)"
           (click)="selectData(data, user, 'userName')"
         >
           {{ data.Email }} || {{ data.UserName }}
@@ -57,6 +58,7 @@
         required
         (ngModelChange)="modelChanged($event, user, 'Email')"
         (keydown.enter)="onEnterKey($event, user, 'Email')"
+        (keyup)="handleKeyUp($event, user, 'Email')"
       />
 
       <ul *ngIf="user.Email != '' && !user.optionSelectedEmail">
@@ -65,7 +67,7 @@
             let data of sportsData | filterPipeEmail: user.Email;
             let i = index
           "
-          [class.selected]="i === selectedIndex"
+          [class.selected]="isItemSelected(data)"
           (click)="selectData(data, user, 'Email')"
         >
           {{ data.Email }} || {{ data.UserName }}|| {{ selectedIndex }}

@@ -20,6 +20,7 @@ export class AppComponent {
   constructor(private elementRef: ElementRef) {}
   public searchResult: Object[] = [];
   selectedIndex = -1;
+  selectedItem: any;
 
   // defined the array of data
   public sportsData: Object[] = [
@@ -151,8 +152,8 @@ export class AppComponent {
         }
       }
     });
-    console.log(event);
-    console.log(user);
+    // console.log(event);
+    // console.log(user);
     //this.optionSelected = true;
     // if (user.UserName === '' && user.Email === '') {
     //   this.searchResult = [];
@@ -174,40 +175,83 @@ export class AppComponent {
     // this.selectedIndex = -1;
   }
 
-  @HostListener('window:keydown', ['$event'])
-  onKeyDown(event: KeyboardEvent) {
-    console.log(event);
-    if (event.keyCode === 38) {
-      // up arrow
-      this.selectedIndex = Math.max(0, this.selectedIndex - 1);
+  // @HostListener('window:keydown', ['$event'])
+  // onKeyDown(event: KeyboardEvent) {
+  //   console.log(event);
+  //   if (event.keyCode === 38) {
+  //     // up arrow
+  //     this.selectedIndex = Math.max(0, this.selectedIndex - 1);
+  //     event.preventDefault();
+  //   } else if (event.keyCode === 40) {
+  //     // down arrow
+  //     this.selectedIndex = Math.min(
+  //       this.sportsData.length - 1,
+  //       this.selectedIndex + 1
+  //     );
+  //     event.preventDefault();
+  //   } else if (event.keyCode === 13) {
+  //     const selectedUser = this.getSelectedUser();
+  //     if (selectedUser) {
+  //       console.log('Selected user:', selectedUser);
+  //       // do something with the selected user, e.g. navigate to their profile page
+  //     }
+  //   }
+  // }
+
+  // getSelectedUser() {
+  //   console.log('select index', this.selectedIndex);
+  //   if (
+  //     this.selectedIndex >= 0 &&
+  //     this.selectedIndex < this.sportsData.length
+  //   ) {
+  //     return this.sportsData[this.selectedIndex];
+  //   } else {
+  //     return null;
+  //   }
+  // }
+
+  onEnterKey(event: any, user: any, type: string) {}
+
+  handleKeyUp(event: any, user: any, type: string) {
+    const currentIndex = this.sportsData.indexOf(this.selectedItem);
+
+    if (event.key === 'ArrowUp') {
       event.preventDefault();
-    } else if (event.keyCode === 40) {
-      // down arrow
-      this.selectedIndex = Math.min(
-        this.sportsData.length - 1,
-        this.selectedIndex + 1
-      );
+      this.selectedItem =
+        currentIndex > 0
+          ? this.sportsData[currentIndex - 1]
+          : this.sportsData[this.sportsData.length - 1];
+      console.log('ArroyUpeventSelected item ', this.selectedItem);
+    } else if (event.key === 'ArrowDown') {
       event.preventDefault();
-    } else if (event.keyCode === 13) {
-      const selectedUser = this.getSelectedUser();
-      if (selectedUser) {
-        console.log('Selected user:', selectedUser);
-        // do something with the selected user, e.g. navigate to their profile page
+      this.selectedItem =
+        currentIndex < this.sportsData.length - 1
+          ? this.sportsData[currentIndex + 1]
+          : this.sportsData[0];
+      console.log('ArroydowneventSelected item ', this.selectedItem);
+    } else if (event.key === 'Enter') {
+      if (this.selectedItem) {
+        console.log('enter tSelected item ', this.selectedItem);
+        this.users.forEach((x) => {
+          if (x.Id == user.Id) {
+            if (type == 'userName') {
+              x.optionSelectedUserName = true;
+              x.optionSelectedEmail = true;
+            } else {
+              x.optionSelectedUserName = true;
+              x.optionSelectedEmail = true;
+            }
+            x.optionSelected = true;
+            x.UserName = this.selectedItem.UserName;
+            x.Email = this.selectedItem.Email;
+          }
+        });
       }
     }
   }
 
-  getSelectedUser() {
-    console.log('select index', this.selectedIndex);
-    if (
-      this.selectedIndex >= 0 &&
-      this.selectedIndex < this.sportsData.length
-    ) {
-      return this.sportsData[this.selectedIndex];
-    } else {
-      return null;
-    }
+  isItemSelected(item: any) {
+    console.log(item);
+    return item === this.selectedItem;
   }
-
-  onEnterKey(event: any, user: any, type: string) {}
 }
